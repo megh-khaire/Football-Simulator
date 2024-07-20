@@ -1,7 +1,7 @@
 import pandas as pd
 
 from simulator.player import Player
-from manager import Manager
+from simulator.manager import Manager
 
 df_players_data = pd.read_pickle("simulator/data/player_data")
 
@@ -26,16 +26,16 @@ class Team:
 
     def set_stats(self):
         self.attackers = [
-            player for player in self.players.values() if player.is_attacker()
+            player for player in self.players.values() if player.is_attacker
         ]
         self.defenders = [
-            player for player in self.players.values() if player.is_defender()
+            player for player in self.players.values() if player.is_defender
         ]
         self.midfielders = [
-            player for player in self.players.values() if player.is_midfielder()
+            player for player in self.players.values() if player.is_midfielder
         ]
         self.goalkeepers = [
-            player for player in self.players.values() if player.is_goalkeeper()
+            player for player in self.players.values() if player.is_goalkeeper
         ]
         self.attack = sum(player.overall for player in self.attackers) // len(
             self.attackers

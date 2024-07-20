@@ -1,15 +1,7 @@
+from simulator.configs.player import Position, TeamStatus
+
+
 class Player:
-    # Positions:
-    ATTACKER = "attacker"
-    MIDFIELDER = "midfielder"
-    DEFENDER = "defender"
-    GOALKEEPER = "goalkeeper"
-
-    # TEAM STATUS:
-    STARTER = "starter"
-    SUBSTITUTE = "substitute"
-    RESERVE = "reserve"
-
     GOALKEEPER_ATTRIBUTES = [
         "gk_diving",
         "gk_handling",
@@ -31,43 +23,47 @@ class Player:
         self.defending = stats["defending"]
         self.physic = stats["physic"]
         self.keeping = 0
-        self.team_status = Player.RESERVE
-        self.position = stats["player_positions"]
-        self.set_player_position(stats["player_positions"])
-        self.set_goalkeeper_rating(stats)
+        self.team_status = TeamStatus.RESERVE
+        self.position = self._determine_position(stats["player_positions"])
+        self._set_goalkeeper_rating(stats)
 
-    def set_player_position(self, player_positions):
+    def _determine_position(self, player_positions):
         main_position = player_positions.split(",")[0]
         if "B" in main_position:
-            self.position = Player.DEFENDER
+            return Position.DEFENDER
         elif "M" in main_position:
-            self.position = Player.MIDFIELDER
-        elif ("S" in main_position) or ("F" in main_position) or ("W" in main_position):
-            self.position = Player.ATTACKER
+            return Position.MIDFIELDER
+        elif "S" in main_position or "F" in main_position or "W" in main_position:
+            return Position.ATTACKER
         else:
-            self.position = Player.GOALKEEPER
+            return Position.GOALKEEPER
 
-    def set_goalkeeper_rating(self, stats):
-        if self.is_goalkeeper():
-            gk_rating = 0
-            for attribute in Player.GOALKEEPER_ATTRIBUTES:
-                gk_rating += stats[attribute]
+    def _set_goalkeeper_rating(self, stats):
+        if self.position == Position.GOALKEEPER:
+            gk_rating = sum(
+                stats[attribute] for attribute in Player.GOALKEEPER_ATTRIBUTES
+            )
             self.keeping = gk_rating // len(Player.GOALKEEPER_ATTRIBUTES)
 
+    @property
     def is_attacker(self):
-        return self.position == Player.ATTACKER
+        return self.position == Position.ATTACKER
 
+    @property
     def is_midfielder(self):
-        return self.position == Player.MIDFIELDER
+        return self.position == Position.MIDFIELDER
 
+    @property
     def is_defender(self):
-        return self.position == Player.DEFENDER
+        return self.position == Position.DEFENDER
 
+    @property
     def is_goalkeeper(self):
-        return self.position == Player.GOALKEEPER
+        return self.position == Position.GOALKEEPER
+
+    @property
+    def is_starter(self):
+        return self.team_status == TeamStatus.STARTER
 
     def set_as_starter(self):
-        self.position = Player.STARTER
-
-    def is_starter(self):
-        return self.position == Player.STARTER
+        self.team_status = TeamStatus.STARTER
