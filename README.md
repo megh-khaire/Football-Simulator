@@ -11,7 +11,7 @@ The simulator runs week-by-week simulations of matches between all teams in the 
 |  4 | Milan         |               38 |     23 |      10 |        5 |       79 |   68 |   25 |   43 |
 |  5 | Lazio         |               38 |     20 |       7 |       11 |       67 |   82 |   57 |   25 |
 |  6 | Torino        |               38 |     17 |       7 |       14 |       58 |   59 |   45 |   14 |
-....
+......
 
 ## How to run the simulator
 
@@ -19,35 +19,35 @@ To run this simulator locally, you need to perform the following steps:
 
 1. Clone this repository on your local machine:
 
-```bash
-git clone https://github.com/AllenThomasDev/Football-Simulator.git
-```
+    ```bash
+    git clone https://github.com/AllenThomasDev/Football-Simulator.git
+    ```
 
 2. Move inside the main project directory:
 
-```bash
-cd Football-Simulator
-```
+    ```bash
+    cd Football-Simulator
+    ```
 
 3. Setup and activate your virtual environment (optional):
 
-```bash
-# To create a virtual env:
-python -m venv .venv
+    ```bash
+    # To create a virtual env:
+    python -m venv .venv
 
-# For activation use one of the following commands based on your OS:
-source .venv/bin/activate   # On Mac / Linux
-.venv\Scripts\activate.bat  # In Windows CMD
-.venv\Scripts\Activate.ps1  # In Windows PowerShell
-```
+    # For activation use one of the following commands based on your OS:
+    source .venv/bin/activate   # On Mac / Linux
+    .venv\Scripts\activate.bat  # In Windows CMD
+    .venv\Scripts\Activate.ps1  # In Windows PowerShell
+    ```
 
 4. Install the required packages from the `requirements.txt` file:
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-5. Start the simulator by running: `python simulator`
+5. Start the simulator by running: `python -m simulator`
 
 ## How does it work
 
@@ -127,8 +127,9 @@ You can also create a custom league (like UCL) by picking different teams from a
 There is no theoretical limit to the number of teams, but try to limit the number of teams to 100 and ideally try to have an even number of teams. To make this work you will have to edit `constants/leagues.py` and add your league to it. Ensure that you use the correct team name. For example, 'Man Utd' will not work, you will have to use 'Manchester United' because that is how it is stored.
 
 To see the list of all valid team names, you can execute the following command:
+
 ```bash
-python simulator/scripts/all_teams.py
+python -m simulator.scripts.all_teams
 ```
 
 ## Sample Output
